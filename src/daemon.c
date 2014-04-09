@@ -40,7 +40,7 @@ int daemonize(char *const cmd[], char verbose) {
                         /* child-parent processus */
                         if (verbose) {
                                 printf("Successfully launched "
-                                       "command with PID %d\n", child2);
+                                       "command with PID %d.\n", child2);
                         }
 
                         exit(EXIT_SUCCESS);
