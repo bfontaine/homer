@@ -4,7 +4,11 @@
 
 ## Install
 
-TODO
+```sh
+git clone https://github.com/bfontaine/homer.git
+cd homer
+[sudo] make install
+```
 
 ## Usage
 
