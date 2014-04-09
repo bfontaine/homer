@@ -5,17 +5,12 @@
 
 #include "daemon.h"
 
-pid_t daemonize(char *const cmd[]) {
+int daemonize(char *const cmd[], char verbose) {
 
         pid_t child1 = fork(),
-              child2 = 0;
+              child2;
 
-        int pipefd[2];
-
-        if (pipe(pipefd) == -1) {
-                perror("pipe");
-                return -1;
-        }
+        int child1_st = 0;
 
         if (child1 == -1) {
                 perror("fork");
@@ -24,17 +19,13 @@ pid_t daemonize(char *const cmd[]) {
 
         if (child1 > 0) {
                 /* parent processus */
-                /* first, read the grandchild PID. */
-                close(pipefd[1]);
-                if (read(pipefd[0], &child2, sizeof(child2)) == -1) {
-                        perror("read");
+                wait(&child1_st);
+
+                if (!WIFEXITED(child1_st) || WEXITSTATUS(child1_st) != 0) {
                         return -1;
                 }
-                close(pipefd[0]);
-                wait(NULL);
 
-                /* then return it to the caller. */
-                return child2;
+                return 0;
 
         } else {
                 /* child processus */
@@ -47,16 +38,11 @@ pid_t daemonize(char *const cmd[]) {
 
                 if (child2 > 0) {
                         /* child-parent processus */
-                        /* first, send the grandchild PID to its grandparent.
-                         */
-                        close(pipefd[0]);
-                        if (write(pipefd[1], &child2, sizeof(child2)) == -1) {
-                                perror("write");
-                                exit(EXIT_FAILURE);
+                        if (verbose) {
+                                printf("Successfully launched "
+                                       "command with PID %d\n", child2);
                         }
-                        close(pipefd[1]);
 
-                        /* then exit */
                         exit(EXIT_SUCCESS);
 
                 } else {

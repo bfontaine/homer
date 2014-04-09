@@ -6,7 +6,16 @@
 #include "daemon.h"
 
 int print_help(char *exe) {
-        printf("Usage:\n\t%s [-h] <command>\n", exe);
+        printf("Usage:\n"
+               "\t%1$s -h\n"
+               "\t%1$s [-q] <command>\n"
+               "\n"
+               "Options:\n"
+               "\t-h: show this help\n"
+               "\t-q: quiet mode, don't print the PID.\n"
+               "\n"
+               "Example:\n"
+               "\t%1$s mylongprocess --an-option arg1 arg2\n", exe);
         return 0;
 }
 
@@ -16,14 +25,19 @@ int main(int argc, char **argv) {
         int optch;
         extern int opterr;
 
+        char verbose_flag = 1;
+
         opterr = 1;
 
-        while ((optch = getopt(argc, argv, "h")) != -1) {
+        while ((optch = getopt(argc, argv, "hq")) != -1) {
                 /* we'll eventually extend this statement to include more
                  * options. */
                 switch (optch) {
                 case 'h':
                         return print_help(argv[0]);
+                case 'q':
+                        verbose_flag = 0;
+                        break;
                 }
         }
 
@@ -32,20 +46,19 @@ int main(int argc, char **argv) {
                 return print_help(argv[0]);
         }
 
-        cmd_pid = daemonize(argv + optind);
+        cmd_pid = daemonize(argv + optind, verbose_flag);
 
         if (cmd_pid == 0) {
                 /* cannot get the grandchild PID. */
-                puts("Successfully daemonized the command.");
-                exit(EXIT_SUCCESS);
+                puts("Successfully daemonized the command but cannot "
+                     "get its PID.");
+                return EXIT_FAILURE;
         }
 
         if (cmd_pid < 0) {
                 puts("Got an error.");
-                exit(EXIT_FAILURE);
+                return EXIT_FAILURE;
         }
 
-        printf("Successfully daemonized the command with PID %d.\n", cmd_pid);
-
-        return 0;
+        return EXIT_SUCCESS;
 }
