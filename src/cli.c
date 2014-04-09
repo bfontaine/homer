@@ -4,18 +4,24 @@
 
 #include "cli.h"
 #include "daemon.h"
+#include "version.h"
 
 int print_help(char *exe) {
         printf("Usage:\n"
-               "\t%1$s -h\n"
                "\t%1$s [-q] <command>\n"
                "\n"
                "Options:\n"
-               "\t-h: show this help\n"
-               "\t-q: quiet mode, don't print the PID.\n"
+               "\t-h: show this help and exit\n"
+               "\t-q: quiet mode, don't print the PID\n"
+               "\t-v: print the version and exit\n"
                "\n"
                "Example:\n"
                "\t%1$s mylongprocess --an-option arg1 arg2\n", exe);
+        return 0;
+}
+
+int print_version(void) {
+        printf("homer(1) - version %s\n", HOMER_VERSION);
         return 0;
 }
 
@@ -29,7 +35,7 @@ int main(int argc, char **argv) {
 
         opterr = 1;
 
-        while ((optch = getopt(argc, argv, "hq")) != -1) {
+        while ((optch = getopt(argc, argv, "hqv")) != -1) {
                 /* we'll eventually extend this statement to include more
                  * options. */
                 switch (optch) {
@@ -38,6 +44,8 @@ int main(int argc, char **argv) {
                 case 'q':
                         verbose_flag = 0;
                         break;
+                case 'v':
+                        return print_version();
                 }
         }
 

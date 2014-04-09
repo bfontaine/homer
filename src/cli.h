@@ -7,5 +7,7 @@
  **/
 int print_help(char *exe);
 
+/** Print the current version **/
+int print_version(void);
 
 #endif /* _CLI_H */
