@@ -7,7 +7,7 @@ SRC:=src
 
 BIN:=homer
 
-CFLAGS=-Wall -Wextra -Wundef -Wpointer-arith -std=c89 -I$(SRC)
+CFLAGS=-Wall -Wextra -Wundef -Wpointer-arith -std=c99 -I$(SRC)
 
 .PHONY: all clean test install uninstall
 
