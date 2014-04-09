@@ -1,5 +1,7 @@
 # homer(1)
 
+[![Build Status](https://travis-ci.org/bfontaine/homer.svg?branch=master)](https://travis-ci.org/bfontaine/homer)
+
 **Homer** is a command-line tool to daemonize a task.
 
 This is an alpha release, it doesn’t support PID files and logging.
