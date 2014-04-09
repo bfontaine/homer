@@ -56,13 +56,6 @@ int main(int argc, char **argv) {
 
         cmd_pid = daemonize(argv + optind, verbose_flag);
 
-        if (cmd_pid == 0) {
-                /* cannot get the grandchild PID. */
-                puts("Successfully daemonized the command but cannot "
-                     "get its PID.");
-                return EXIT_FAILURE;
-        }
-
         if (cmd_pid < 0) {
                 puts("Got an error.");
                 return EXIT_FAILURE;
