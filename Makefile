@@ -6,6 +6,8 @@ PREFIX ?= /usr/local
 SRC:=src
 
 BIN:=homer
+TARGET_DIR=$(PREFIX)/bin
+TARGET=$(TARGET_DIR)/$(BIN)
 
 CFLAGS=-Wall -Wextra -Wundef -Wpointer-arith -std=gnu99 -I$(SRC)
 
@@ -16,6 +18,12 @@ all: $(BIN)
 $(BIN): $(SRC)/cli.o $(SRC)/daemon.o
 	$(CC) $(CFLAGS) -o $@ $^
 
+$(TARGET_DIR):
+	mkdir -p $(TARGET_DIR)
+
+$(TARGET): $(BIN) $(TARGET_DIR)
+	cp -f $(BIN) $(TARGET)
+
 %.o: %.c %.h
 	$(CC) $(CFLAGS) -o $@ -c $<
 
@@ -23,12 +31,10 @@ clean:
 	find . -name '*.o' -delete
 	rm -f $(BIN) *.tmp
 
-test:
+test: install
 	@./test/test.sh
 
-install: $(BIN)
-	mkdir -p $(PREFIX)/bin
-	cp -f $(BIN) $(PREFIX)/bin/$(BIN)
+install: $(TARGET)
 
 uninstall:
-	rm -f $(PREFIX)/bin/$(BIN)
+	rm -f $(TARGET)
