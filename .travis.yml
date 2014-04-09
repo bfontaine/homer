@@ -1,3 +1,5 @@
 language: c
 install: sudo make install
 script: sudo make test
+notifications:
+  email: false
