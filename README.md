@@ -1,9 +1,8 @@
 # homer(1)
 
-**Homer** is a tool to daemonize a task written in pure ANSI C89.
+**Homer** is a command-line tool to daemonize a task.
 
-This is currently more of a proof of concept, it doesn’t support PID files and
-logging.
+This is an alpha release, it doesn’t support PID files and logging.
 
 ## Install
 
