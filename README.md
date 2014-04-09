@@ -20,8 +20,16 @@ It’ll start `mycommand args ...` in a daemonized processus and print its PID.
 
 Type `homer -h` to see all available options.
 
+## Tests
+
+    git clone https://github.com/bfontaine/homer.git
+    cd homer
+    make test
+
 ## License
 
-MIT. See the [LICENSE][] file.
+MIT.
+
+See the [LICENSE][] file.
 
 [LICENSE]: https://github.com/bfontaine/homer/blob/master/LICENSE
