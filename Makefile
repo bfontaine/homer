@@ -9,7 +9,7 @@ BIN:=homer
 
 CFLAGS=-Wall -Wextra -Wundef -Wpointer-arith -std=c89 -I$(SRC)
 
-.PHONY: all clean install uninstall
+.PHONY: all clean test install uninstall
 
 all: $(BIN)
 
@@ -21,7 +21,10 @@ $(BIN): $(SRC)/cli.o $(SRC)/daemon.o
 
 clean:
 	find . -name '*.o' -delete
-	rm -f $(BIN)
+	rm -f $(BIN) *.tmp
+
+test:
+	@./test/test.sh
 
 install: $(BIN)
 	mkdir -p $(PREFIX)/bin

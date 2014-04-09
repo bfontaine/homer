@@ -1,6 +1,7 @@
 *~
 .*.sw*
 *.o
+*.tmp
 a.out
 .DS_Store
 /homer
