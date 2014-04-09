@@ -31,8 +31,8 @@ clean:
 	find . -name '*.o' -delete
 	rm -f $(BIN) *.tmp
 
-test: install
-	@./test/test.sh
+test: $(BIN)
+	@BIN=$${PWD}/$(BIN) ./test/test.sh
 
 install: $(TARGET)
 

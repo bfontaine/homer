@@ -3,8 +3,10 @@
 TESTS=`find . -name 'test_*.sh' -type f`
 EXIT_CODE=0
 
+echo "Testing with $BIN."
+
 for t in $TESTS; do
-    ./$t
+    ./$t >/dev/null
     if [ $? -eq 0 ]; then
         echo "[ ok ] $t"
     else
