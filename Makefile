@@ -4,6 +4,7 @@ CC     ?= gcc
 PREFIX ?= /usr/local
 
 SRC:=src
+TESTS_RUNNER=./test/test.sh
 
 BIN:=homer
 TARGET_DIR=$(PREFIX)/bin
@@ -11,7 +12,7 @@ TARGET=$(TARGET_DIR)/$(BIN)
 
 CFLAGS=-Wall -Wextra -Wundef -Wpointer-arith -std=gnu99 -I$(SRC)
 
-.PHONY: all clean test install uninstall
+.PHONY: all clean test ci install uninstall
 
 all: $(BIN)
 
@@ -32,7 +33,12 @@ clean:
 	rm -f $(BIN) *.tmp
 
 test: $(BIN)
-	@BIN=$${PWD}/$(BIN) ./test/test.sh
+	@HOMER=$${PWD}/$(BIN) $(TESTS_RUNNER)
+
+test-install:
+	@# this is used on CI server. 'homer' has been installed just before so
+	@# we don't have to depend on the 'install' target here.
+	@HOMER=$(TARGET) $(TESTS_RUNNER)
 
 install: $(TARGET)
 

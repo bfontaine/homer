@@ -3,7 +3,12 @@
 TESTS=`find . -name 'test_*.sh' -type f`
 EXIT_CODE=0
 
-echo "Testing with $BIN."
+echo "Testing with $HOMER"
+
+if [ ! -x $HOMER ]; then
+    echo "Can't find or execute $HOMER."
+    exit 1
+fi
 
 for t in $TESTS; do
     ./$t >/dev/null

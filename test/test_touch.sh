@@ -2,7 +2,7 @@
 
 FILE=x2_ceRc-a12.tmp
 
-$BIN touch $FILE
+$HOMER touch $FILE
 sleep 1
 if [ ! -f $FILE ]; then
     exit 1
