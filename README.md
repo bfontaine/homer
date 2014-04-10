@@ -28,9 +28,7 @@ Type `homer -h` to see all available options.
 
 ## License
 
-MIT.
-
-See the [LICENSE][] file.
+[MIT][LICENSE].
 
 [LICENSE]: https://github.com/bfontaine/homer/blob/master/LICENSE
 
