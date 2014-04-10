@@ -1,8 +1,10 @@
 
-0.1.1 / in development
-======================
+0.1.1 / 2014-04-10
+==================
 
+ * log files support
  * PID file support
+ * better help text
 
 0.1.0 / 2014-04-09
 ==================
