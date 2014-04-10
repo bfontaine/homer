@@ -1,6 +1,6 @@
 #! /bin/bash
 
-TESTS=`find . -name 'test_*.sh' -type f`
+TESTS=`find . -name 'test_*.sh' -type f -perm +111`
 EXIT_CODE=0
 
 echo "Testing with $HOMER"
