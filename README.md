@@ -25,6 +25,11 @@ It’ll start `mycommand args ...` in a daemonized processus and print its PID.
 
 Type `homer -h` to see all available options as well as usage examples.
 
+### Features
+
+- PID file support
+- stdout/stderr log files support
+
 ## Tests
 
     git clone https://github.com/bfontaine/homer.git
