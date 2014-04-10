@@ -33,3 +33,7 @@ MIT.
 See the [LICENSE][] file.
 
 [LICENSE]: https://github.com/bfontaine/homer/blob/master/LICENSE
+
+---
+
+![](https://github.com/bfontaine/homer/raw/master/images/all_the_things.png)
