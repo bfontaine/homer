@@ -21,8 +21,15 @@ int print_help(char *exe) {
                "\t-p <file>: print the PID in a file\n"
                "\t-q: quiet mode, don't print normal output\n"
                "\n"
-               "Example:\n"
-               "\t%1$s mylongprocess --an-option arg1 arg2\n"
+               "Examples:\n"
+               "\tBasic:\n"
+               "\t\t%1$s mylongprocess --an-option arg1 arg2\n"
+               "\n"
+               "\tWith stdout/stderr logs:\n"
+               "\t\t%1$s -e err.log -o out.log mycmd\n"
+               "\n"
+               "\tWith a global log and a PID file:\n"
+               "\t\t%1$s -q -O mycmd.log -p mycmd.pid mycmd\n"
                "\n", exe);
         return 0;
 }
