@@ -5,7 +5,7 @@
 
 #include "daemon.h"
 
-pid_t daemonize(char *const cmd[]) {
+pid_t daemonize(char *const cmd[], int outfd, int errfd) {
 
         pid_t child1, child2;
 
@@ -69,13 +69,30 @@ pid_t daemonize(char *const cmd[]) {
 
                 } else {
                         /* grandchild process */
+                        close(pipefd[0]);
+                        close(pipefd[1]);
+
+                        if (outfd > 0) {
+                                if (dup2(outfd, STDOUT_FILENO) == -1) {
+                                        perror("dup2");
+                                }
+                                close(outfd);
+                        }
+                        if (errfd > 0) {
+                                if (dup2(errfd, STDERR_FILENO) == -1) {
+                                        perror("dup2");
+                                }
+                                close(errfd);
+                        }
+
+
                         if (execvp(cmd[0], cmd) == -1) {
                                 perror("execlp");
                                 exit(EXIT_FAILURE);
                         }
                         /* this will never happen but the compiler gives a
                          * warning if we don't put it. */
-                        return -1;
+                        exit(EXIT_FAILURE);
                 }
         }
 

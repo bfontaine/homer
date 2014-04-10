@@ -9,8 +9,10 @@
  * second child to be re-parented to init. The function returns the PID of the
  * second child or -1 on error.
  * - cmd: the command to daemonize
- * - verbose: 1 for a (slightly) verbose forking, 0 for a silent one.
+ * - outfd: file descriptor to redirect stdout to. Set it to -1 for no
+ *   redirection.
+ * - errfd: same as outfd, for stderr.
  **/
-pid_t daemonize(char *const cmd[]);
+pid_t daemonize(char *const cmd[], int outfd, int errfd);
 
 #endif /* _DAEMON_H */

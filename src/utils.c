@@ -49,3 +49,23 @@ CLOSE_AND_RETURN:
         }
         return ret;
 }
+
+int open_log(char *pathname) {
+
+        int fd;
+
+        fd = open(pathname, O_WRONLY|O_CREAT|O_APPEND, 0644);
+
+        if (fd < 0) {
+                perror("open");
+                return -1;
+        }
+
+        if (flock(fd, LOCK_SH) == -1) {
+                perror("flock");
+                close(fd);
+                return -1;
+        }
+
+        return fd;
+}

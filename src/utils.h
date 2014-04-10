@@ -14,4 +14,12 @@
  **/
 int write_pid(char *pathname, pid_t pid);
 
+/**
+ * Open a file for logging purposes. The file is created if it doesn't exist,
+ * and opened in append mode. A shared lock is put on it, and the file
+ * descriptor is returned.
+ * - pathname: the file path
+ **/
+int open_log(char *pathname);
+
 #endif
