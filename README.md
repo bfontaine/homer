@@ -6,6 +6,13 @@
 
 ## Install
 
+### With Homebrew (OSX)
+
+    brew tap bfontaine/utils
+    brew install homer
+
+### From sources
+
     git clone https://github.com/bfontaine/homer.git
     cd homer
     [sudo] make install
