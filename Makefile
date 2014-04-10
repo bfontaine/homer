@@ -12,7 +12,16 @@ TARGET=$(TARGET_DIR)/$(BIN)
 
 CFLAGS=-Wall -Wextra -Wundef -Wpointer-arith -std=gnu99 -I$(SRC)
 
-.PHONY: all clean test ci install uninstall
+CPPCHECK_VER:=$(shell cppcheck --version 2>/dev/null)
+ifdef CPPCHECK_VER
+CPPCHECK=cppcheck \
+	--enable=warning,style \
+	--language=c -q
+else
+CPPCHECK=\#
+endif
+
+.PHONY: all clean test test-install install uninstall
 
 all: $(BIN)
 
@@ -33,6 +42,9 @@ clean:
 	rm -f $(BIN) *.tmp
 
 test: $(BIN)
+	@# avoid a failed build because cppcheck doesn't exist or is a wrong
+	@# version
+	$(CPPCHECK) $(SRC) || true
 	@HOMER=$${PWD}/$(BIN) $(TESTS_RUNNER)
 
 test-install:
