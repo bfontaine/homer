@@ -54,11 +54,16 @@ int main(int argc, char **argv) {
                 return print_help(argv[0]);
         }
 
-        cmd_pid = daemonize(argv + optind, verbose_flag);
+        cmd_pid = daemonize(argv + optind);
 
         if (cmd_pid < 0) {
                 puts("Got an error.");
                 return EXIT_FAILURE;
+        }
+
+        if (verbose_flag) {
+                printf("Successfully launched command"
+                       " with PID %d.\n", cmd_pid);
         }
 
         return EXIT_SUCCESS;

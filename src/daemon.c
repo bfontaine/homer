@@ -5,12 +5,19 @@
 
 #include "daemon.h"
 
-int daemonize(char *const cmd[], char verbose) {
+pid_t daemonize(char *const cmd[]) {
 
-        pid_t child1 = fork(),
-              child2;
+        pid_t child1, child2;
 
         int child1_st = 0;
+        int pipefd[2];
+
+        if (pipe(pipefd) == -1) {
+                perror("pipe");
+                return -1;
+        }
+
+        child1 = fork();
 
         if (child1 == -1) {
                 perror("fork");
@@ -19,13 +26,21 @@ int daemonize(char *const cmd[], char verbose) {
 
         if (child1 > 0) {
                 /* parent processus */
+                /* get the grandchild PID */
+                close(pipefd[1]);
+                if (read(pipefd[0], &child2, sizeof(child2)) == -1) {
+                        perror("read");
+                        return -1;
+                }
+
                 wait(&child1_st);
+                close(pipefd[0]);
 
                 if (!WIFEXITED(child1_st) || WEXITSTATUS(child1_st) != 0) {
                         return -1;
                 }
 
-                return 0;
+                return child2;
 
         } else {
                 /* child processus */
@@ -38,10 +53,17 @@ int daemonize(char *const cmd[], char verbose) {
 
                 if (child2 > 0) {
                         /* child-parent processus */
-                        if (verbose) {
-                                printf("Successfully launched "
-                                       "command with PID %d.\n", child2);
+                        /* first, communicate the grandchild PID to their
+                         * grandparent. */
+                        close(pipefd[0]);
+                        if (write(pipefd[1], &child2, sizeof(child2)) == -1) {
+                                perror("write");
+                                exit(EXIT_FAILURE);
                         }
+
+                        /* wait to be sure the parent reads the child PID */
+                        sleep(1);
+                        close(pipefd[1]);
 
                         exit(EXIT_SUCCESS);
 
