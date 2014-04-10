@@ -6,11 +6,15 @@ PREFIX ?= /usr/local
 SRC:=src
 TESTS_RUNNER=./test/test.sh
 
+SRCS=$(wildcard src/*.c)
+OBJS=$(SRCS:.c=.o)
+
 BIN:=homer
 TARGET_DIR=$(PREFIX)/bin
 TARGET=$(TARGET_DIR)/$(BIN)
 
-CFLAGS=-Wall -Wextra -Wundef -Wpointer-arith -std=gnu99 -I$(SRC)
+CFLAGS=-Wall -Wextra -Wundef -Wpointer-arith -std=gnu99
+LDFLAGS=-lm
 
 CPPCHECK_VER:=$(shell cppcheck --version 2>/dev/null)
 ifdef CPPCHECK_VER
@@ -25,8 +29,8 @@ endif
 
 all: $(BIN)
 
-$(BIN): $(SRC)/cli.o $(SRC)/daemon.o
-	$(CC) $(CFLAGS) -o $@ $^
+$(BIN): $(OBJS)
+	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
 
 $(TARGET_DIR):
 	mkdir -p $(TARGET_DIR)

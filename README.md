@@ -4,7 +4,7 @@
 
 **Homer** is a command-line tool to daemonize a task.
 
-This is an alpha release, it doesn’t support PID files and logging.
+This is an alpha release, it doesn’t support logging.
 
 ## Install
 
