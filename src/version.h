@@ -1,3 +1,3 @@
 #ifndef HOMER_VERSION
-#define HOMER_VERSION "0.1.2"
+#define HOMER_VERSION "0.1.3"
 #endif

@@ -35,6 +35,8 @@ all: $(BIN) docs
 $(BIN): $(OBJS)
 	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
 
+$(SRC)/cli.o: $(SRC)/version.h
+
 %.o: %.c %.h
 	$(CC) $(CFLAGS) -o $@ -c $<
 
