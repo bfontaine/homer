@@ -5,3 +5,5 @@
 a.out
 .DS_Store
 /homer
+/man/*.1
+/man/*.html

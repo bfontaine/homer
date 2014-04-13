@@ -1,7 +1,9 @@
 # Homer Makefile
 
-CC     ?= gcc
-PREFIX ?= /usr/local
+CC        ?= gcc
+PREFIX    ?= /usr/local
+BINPREFIX ?= $(PREFIX)/bin
+MANPREFIX ?= $(PREFIX)/share/man/man1
 
 SRC:=src
 TESTS_RUNNER=./test/test.sh
@@ -9,9 +11,10 @@ TESTS_RUNNER=./test/test.sh
 SRCS=$(wildcard src/*.c)
 OBJS=$(SRCS:.c=.o)
 
+MANS=$(wildcard man/*.md)
+MAN_PAGES=$(MANS:.md=.1)
+
 BIN:=homer
-TARGET_DIR=$(PREFIX)/bin
-TARGET=$(TARGET_DIR)/$(BIN)
 
 CFLAGS=-Wall -Wextra -Wundef -Wpointer-arith -std=gnu99
 LDFLAGS=-lm
@@ -25,25 +28,25 @@ else
 CPPCHECK=\#
 endif
 
-.PHONY: all clean test test-install install uninstall
+.PHONY: all clean docs test test-install install uninstall
 
-all: $(BIN)
+all: $(BIN) docs
 
 $(BIN): $(OBJS)
 	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
 
-$(TARGET_DIR):
-	mkdir -p $(TARGET_DIR)
-
-$(TARGET): $(BIN) $(TARGET_DIR)
-	cp -f $(BIN) $(TARGET)
-
 %.o: %.c %.h
 	$(CC) $(CFLAGS) -o $@ -c $<
+
+docs: $(MAN_PAGES)
+
+man/%.1: man/%.md
+	ronn -rw --manual "Homer Manual" --pipe $< > $@
 
 clean:
 	find . -name '*.o' -delete
 	rm -f $(BIN) *.tmp
+	rm -f man/*.1
 
 test: $(BIN)
 	@# avoid a failed build because cppcheck doesn't exist or is a wrong
@@ -56,7 +59,13 @@ test-install:
 	@# we don't have to depend on the 'install' target here.
 	@HOMER=$(TARGET) $(TESTS_RUNNER)
 
-install: $(TARGET)
+install: $(BIN) docs
+	@mkdir -p $(BINPREFIX)
+	@mkdir -p $(MANPREFIX)
+	cp -f $(BIN) $(BINPREFIX)/$(BIN)
+	cp -f man/*.1 $(MANPREFIX)/
 
 uninstall:
-	rm -f $(TARGET)
+	rm -f $(BINPREFIX)/$(BIN)
+	$(foreach MAN, $(MAN_PAGES), \
+		rm -f $(MANPREFIX)/$(notdir $(MAN)))
