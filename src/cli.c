@@ -55,8 +55,6 @@ int main(int argc, char **argv) {
         opterr = 1;
 
         while ((optch = getopt(argc, argv, "e:ho:O:p:qv")) != -1) {
-                /* we'll eventually extend this statement to include more
-                 * options. */
                 switch (optch) {
                 case 'e':
                         errfile = optarg;
@@ -78,6 +76,9 @@ int main(int argc, char **argv) {
                         break;
                 case 'v':
                         return print_version();
+                case '?':
+                        /* wrong option or missing argument */
+                        exit(EXIT_FAILURE);
                 }
         }
 

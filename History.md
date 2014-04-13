@@ -3,6 +3,8 @@
 ==================
 
   * man page
+  * the program doesn't run anymore if there's an unknown option or a missing
+    argument
 
 0.1.1 / 2014-04-10
 ==================
