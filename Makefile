@@ -28,7 +28,7 @@ else
 CPPCHECK=\#
 endif
 
-.PHONY: all clean docs test test-install install uninstall
+.PHONY: test
 
 all: $(BIN) docs
 
