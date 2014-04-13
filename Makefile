@@ -45,7 +45,8 @@ man/%.1: man/%.md
 
 clean:
 	find . -name '*.o' -delete
-	rm -f $(BIN) *.tmp
+	rm -f $(BIN)
+	rm -rf *.tmp
 	rm -f man/*.1
 
 test: $(BIN)
