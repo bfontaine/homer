@@ -3,6 +3,11 @@
 TESTS=`find . -name 'test_*.sh' -type f -perm +111`
 EXIT_CODE=0
 
+if [ -z "$HOMER" ]; then
+    echo 'Please set $HOMER.'
+    exit 1
+fi
+
 echo "Testing with $HOMER"
 
 if [ ! -x $HOMER ]; then

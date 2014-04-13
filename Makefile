@@ -57,7 +57,7 @@ test: $(BIN)
 test-install:
 	@# this is used on CI server. 'homer' has been installed just before so
 	@# we don't have to depend on the 'install' target here.
-	@HOMER=$(TARGET) $(TESTS_RUNNER)
+	@HOMER=$(BINPREFIX)/$(BIN) $(TESTS_RUNNER)
 
 install: $(BIN) docs
 	@mkdir -p $(BINPREFIX)
