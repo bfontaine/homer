@@ -23,8 +23,10 @@
 
 It’ll start `mycommand args ...` in a daemonized processus and print its PID.
 
-Type `homer -h` or `man homer` to see all available options as well as usage
-examples.
+Type `homer -h` or see [the man page][man] to see all available options as well
+as usage examples.
+
+[man]: https://bfontaine.github.io/homer
 
 ### Features
 
