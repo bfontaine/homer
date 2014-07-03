@@ -55,4 +55,4 @@ Bugs should be reported at <https://github.com/bfontaine/homer/issues>.
 
 ## SEE ALSO
 
-The projet homepage is at <https://github.com/bfontaine/homer>.
+The project homepage is at <https://github.com/bfontaine/homer>.
