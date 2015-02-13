@@ -1,6 +1,7 @@
 # homer(1)
 
 [![Build Status](https://travis-ci.org/bfontaine/homer.svg?branch=master)](https://travis-ci.org/bfontaine/homer)
+[![Coverity Scan Build Status](https://scan.coverity.com/projects/4255/badge.svg)](https://scan.coverity.com/projects/4255)
 
 **Homer** is a command-line tool to daemonize a task.
 
