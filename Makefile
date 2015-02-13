@@ -52,7 +52,6 @@ clean:
 	find . -name '*.o' -delete
 	rm -f $(BIN)
 	rm -rf *.tmp
-	rm -f man/*.1
 
 test: $(BIN)
 	@# avoid a failed build because cppcheck doesn't exist or is a wrong
